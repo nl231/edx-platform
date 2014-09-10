@@ -16,7 +16,7 @@ def _count_violations(file):
     return num_lines
 
 @task
-@needs('pavelib.prereqs.install_python_prereqs')
+#@needs('pavelib.prereqs.install_python_prereqs')
 @cmdopts([
     ("system=", "s", "System to act on"),
     ("errors", "e", "Check for errors only"),
@@ -67,8 +67,9 @@ def run_pylint(options):
         num_violations = num_violations + _count_violations(
             "{report_dir}/pylint.report".format(report_dir=report_dir))
 
+    print(num_violations, " is how many")
     if ((num_violations > PYLINT_VIOLATIONS_LIMIT) and (not ignore_violations)):
-        raise Exception
+        raise Exception("Failed. Too many pylint violations.")
 
 
 @task
@@ -96,7 +97,7 @@ def run_pep8(options):
 
     # Fail the task if the violations limit has been reached
     if ((num_violations > PEP8_VIOLATIONS_LIMIT) and (not ignore_violations)):
-        raise Exception
+        raise Exception("Failed. Too many pep8 violations.")
 
 @task
 @needs('pavelib.prereqs.install_python_prereqs')
