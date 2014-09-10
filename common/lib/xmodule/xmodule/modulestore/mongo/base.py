@@ -1440,3 +1440,19 @@ class MongoModuleStore(ModuleStoreDraftAndPublished, ModuleStoreWriteBase, Mongo
             return {ModuleStoreEnum.Type.mongo: True}
         else:
             raise HeartbeatFailure("Can't connect to {}".format(self.database.name), 'mongo')
+
+    def ensure_indexes(self):
+
+        # Because we often query for some subset of the id, we define this index:
+        self.collection.create_index([
+            ('_id.org', pymongo.ASCENDING),
+            ('_id.course', pymongo.ASCENDING),
+            ('_id.category', pymongo.ASCENDING),
+            ('_id.name', pymongo.ASCENDING),
+        ])
+
+        # Because we often scan for all category='course' regardless of the value of the other fields:
+        self.collection.create_index('_id.category')
+
+        # Because lms calls get_parent_locations frequently (for path generation):
+        self.collection.create_index('definition.children', sparse=True)

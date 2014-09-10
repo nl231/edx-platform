@@ -244,4 +244,13 @@ class MongoConnection(object):
         """
         self.definitions.insert(definition)
 
+    def ensure_indexes(self):
+        self.course_index.create_index(
+            [
+                ('org', pymongo.ASCENDING),
+                ('course', pymongo.ASCENDING),
+                ('run', pymongo.ASCENDING)
+            ],
+            unique=True
+        )
 

@@ -653,3 +653,7 @@ class MixedModuleStore(ModuleStoreDraftAndPublished, ModuleStoreWriteBase):
         store = self._get_modulestore_for_courseid(course_id)
         with store.bulk_operations(course_id):
             yield
+
+    def ensure_indexes(self):
+        for store in self.modulestores:
+            store.ensure_indexes()
