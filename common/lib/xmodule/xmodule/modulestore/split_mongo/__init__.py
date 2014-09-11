@@ -3,7 +3,7 @@ General utilities
 """
 
 from collections import namedtuple
-from contracts import contract, check
+from contracts import contract
 from opaque_keys.edx.locator import BlockUsageLocator
 
 

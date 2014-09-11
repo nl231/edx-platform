@@ -4,7 +4,7 @@ Segregation of pymongo functions from the data modeling mechanisms for split mod
 import re
 import pymongo
 from bson import son
-from contracts import check
+from contracts import check, all_disabled
 from xmodule.exceptions import HeartbeatFailure
 from xmodule.modulestore.split_mongo import BlockKey
 
@@ -17,11 +17,12 @@ def structure_from_mongo(structure):
     Converts 'blocks.*.fields.children' from [[block_type, block_id]] to [BlockKey].
     N.B. Does not convert any other ReferenceFields (because we don't know which fields they are at this level).
     """
-    check('seq[2]', structure['root'])
-    check('list(dict)', structure['blocks'])
-    for block in structure['blocks']:
-        if 'children' in block['fields']:
-            check('list(list[2])', block['fields']['children'])
+    if not all_disabled():
+        check('seq[2]', structure['root'])
+        check('list(dict)', structure['blocks'])
+        for block in structure['blocks']:
+            if 'children' in block['fields']:
+                check('list(list[2])', block['fields']['children'])
 
     structure['root'] = BlockKey(*structure['root'])
     new_blocks = {}
@@ -42,11 +43,12 @@ def structure_to_mongo(structure):
     Doesn't convert 'root', since namedtuple's can be inserted
         directly into mongo.
     """
-    check('BlockKey', structure['root'])
-    check('dict(BlockKey: dict)', structure['blocks'])
-    for block in structure['blocks'].itervalues():
-        if 'children' in block['fields']:
-            check('list(BlockKey)', block['fields']['children'])
+    if not all_disabled():
+        check('BlockKey', structure['root'])
+        check('dict(BlockKey: dict)', structure['blocks'])
+        for block in structure['blocks'].itervalues():
+            if 'children' in block['fields']:
+                check('list(BlockKey)', block['fields']['children'])
 
     new_structure = dict(structure)
     new_structure['blocks'] = []
