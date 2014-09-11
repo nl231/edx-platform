@@ -1442,6 +1442,13 @@ class MongoModuleStore(ModuleStoreDraftAndPublished, ModuleStoreWriteBase, Mongo
             raise HeartbeatFailure("Can't connect to {}".format(self.database.name), 'mongo')
 
     def ensure_indexes(self):
+        """
+        Ensure that all appropriate indexes are created that are needed by this modulestore, or raise
+        an exception if unable to.
+
+        This method is intended for use by tests and administrative commands, and not
+        to be run during server startup.
+        """
 
         # Because we often query for some subset of the id, we define this index:
         self.collection.create_index([
