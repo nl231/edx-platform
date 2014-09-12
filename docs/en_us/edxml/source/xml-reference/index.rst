@@ -6,5 +6,8 @@ edXML Reference
 .. toctree::
    :maxdepth: 2
 
-   directory-structure
+   course-structure-overview
+   course-xml-file
+   course-outline-xml-file
+
  

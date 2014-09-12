@@ -19,6 +19,7 @@ This document is intended for those developing edX courses through edXML.
    getting-started
    tasks/index
    reference/index
+   xml-reference/index
    demo-course/index
 
  
