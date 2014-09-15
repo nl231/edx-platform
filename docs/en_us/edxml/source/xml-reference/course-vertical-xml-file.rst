@@ -37,7 +37,7 @@ The root element of the vertical file is ``vertical``.
 
 The ``vertical`` element contains one or more child elements for each component in the vertical.
 
-.. note:: A vertical element can also contain a vertical element. You can next verticals, or units, recursively.
+.. note:: A vertical element can also contain a vertical element. You can nest verticals, or units, recursively.
 
 ==============================
 ``vertical`` Element Children
