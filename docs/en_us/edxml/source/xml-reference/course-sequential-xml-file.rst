@@ -13,7 +13,7 @@ Create Course Sequential Files
 
 You ceate a course sequential XML file in the ``sequential`` directory for each subsection in your course.
 
-The name of the sequential file must match the value of the @url_name attribute of ``sequential`` element in the chapter XML file.
+The name of the sequential file must match the value of the @url_name attribute of the ``sequential`` element in the chapter XML file.
 
 For example, if the chapter file contains:
 
@@ -88,13 +88,12 @@ The ``vertical`` element contains one attribute:
 Example Sequential File
 *************************************
 
-The following example shows a chapter with three sequentials, or subsections:
+The following example shows a sequential with three verticals, or units:
 
 .. code-block:: xml
   
-  <chapter display_name="Example Week 2: Get Interactive">
-      <sequential url_name="simulations"/>
-      <sequential url_name="graded_simulations"/>
-      <sequential url_name="simulations_review"/>
-  </chapter>
+  <sequential display_name="Lesson 1">
+      <vertical url_name="Lesson_1_Unit_1"/>
+      <vertical url_name="Lesson_1_Unit_2"/>
+  </sequential>
 
