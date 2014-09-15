@@ -4,7 +4,7 @@ The Course Outline XML File
 
 The course outline file:
 
-* Defines common settings for your course
+* Defines common settings for your course.
 * Organizes sections, or chapters, in your course.
 
 *******************************
