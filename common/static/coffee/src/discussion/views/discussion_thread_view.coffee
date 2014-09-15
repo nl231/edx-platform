@@ -253,49 +253,20 @@ if Backbone?
       @createEditView()
       @renderEditView()
 
-    update: (event) =>
-
-      newTitle = @editView.$(".edit-post-title").val()
-      newBody  = @editView.$(".edit-post-body textarea").val()
-
-      url = DiscussionUtil.urlFor('update_thread', @model.id)
-
-      DiscussionUtil.safeAjax
-          $elem: $(event.target)
-          $loading: $(event.target) if event
-          url: url
-          type: "POST"
-          dataType: 'json'
-          async: false # TODO when the rest of the stuff below is made to work properly..
-          data:
-              title: newTitle
-              body: newBody
-
-          error: DiscussionUtil.formErrorHandler(@$(".edit-post-form-errors"))
-          success: (response, textStatus) =>
-              # TODO: Move this out of the callback, this makes it feel sluggish
-              @editView.$(".edit-post-title").val("").attr("prev-text", "")
-              @editView.$(".edit-post-body textarea").val("").attr("prev-text", "")
-              @editView.$(".wmd-preview p").html("")
-
-              @model.set
-                title: newTitle
-                body: newBody
-              @model.unset("abbreviatedBody")
-
-              @createShowView()
-              @renderShowView()
-
     createEditView: () ->
-
       if @showView?
         @showView.undelegateEvents()
         @showView.$el.empty()
         @showView = null
 
-      @editView = new DiscussionThreadEditView(model: @model)
-      @editView.bind "thread:update", @update
-      @editView.bind "thread:cancel_edit", @cancelEdit
+      @editView = new DiscussionThreadEditView(
+        container: @$('.thread-content-wrapper')
+        model: @model
+        mode: @mode
+        course_settings: @options.course_settings
+        topicId: @model.get('commentable_id')
+      )
+      @editView.bind "thread:updated thread:cancel_edit", @closeEditView
 
     renderSubView: (view) ->
       view.setElement(@$('.thread-content-wrapper'))
@@ -303,15 +274,9 @@ if Backbone?
       view.delegateEvents()
 
     renderEditView: () ->
-      @renderSubView(@editView)
+      @editView.render()
 
     createShowView: () ->
-
-      if @editView?
-        @editView.undelegateEvents()
-        @editView.$el.empty()
-        @editView = null
-
       @showView = new DiscussionThreadShowView({model: @model, mode: @mode})
       @showView.bind "thread:_delete", @_delete
       @showView.bind "thread:edit", @edit
@@ -319,8 +284,7 @@ if Backbone?
     renderShowView: () ->
       @renderSubView(@showView)
 
-    cancelEdit: (event) =>
-      event.preventDefault()
+    closeEditView: (event) =>
       @createShowView()
       @renderShowView()
 

@@ -15,7 +15,7 @@ from django_comment_client.base import views
 from django_comment_client.tests.group_id import CohortedTopicGroupIdTestMixin, NonCohortedTopicGroupIdTestMixin, GroupIdAssertionMixin
 from django_comment_client.tests.utils import CohortedContentTestCase
 from django_comment_client.tests.unicode import UnicodeTestMixin
-from django_comment_common.models import Role, FORUM_ROLE_STUDENT
+from django_comment_common.models import Role
 from django_comment_common.utils import seed_permissions_roles
 from student.tests.factories import CourseEnrollmentFactory, UserFactory
 from util.testing import UrlResetMixin
@@ -460,7 +460,7 @@ class ViewsTestCase(UrlResetMixin, ModuleStoreTestCase, MockRequestSetupMixin):
             "at_position_list": [],
             "closed": is_closed,
             "id": "518d4237b023791dca00000d",
-            "user_id": "1","username": "robot",
+            "user_id": "1", "username": "robot",
             "votes": {
                 "count": 0,
                 "up_count": 0,
@@ -859,7 +859,7 @@ class UpdateThreadUnicodeTestCase(ModuleStoreTestCase, UnicodeTestMixin, MockReq
             "user_id": str(self.student.id),
             "closed": False,
         })
-        request = RequestFactory().post("dummy_url", {"body": text, "title": text})
+        request = RequestFactory().post("dummy_url", {"body": text, "title": text, "commentable_id": "test_commentable"})
         request.user = self.student
         request.view_name = "update_thread"
         response = views.update_thread(request, course_id=self.course.id.to_deprecated_string(), thread_id="dummy_thread_id")
@@ -868,6 +868,7 @@ class UpdateThreadUnicodeTestCase(ModuleStoreTestCase, UnicodeTestMixin, MockReq
         self.assertTrue(mock_request.called)
         self.assertEqual(mock_request.call_args[1]["data"]["body"], text)
         self.assertEqual(mock_request.call_args[1]["data"]["title"], text)
+        self.assertEqual(mock_request.call_args[1]["data"]["commentable_id"], "test_commentable")
 
 
 @override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
