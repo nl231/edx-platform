@@ -15,6 +15,7 @@ from instructor_analytics.basic import (
 )
 from courseware.tests.factories import InstructorFactory
 from xmodule.modulestore.tests.factories import CourseFactory
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 
 
 class TestAnalyticsBasic(TestCase):
@@ -100,12 +101,14 @@ class TestCourseSaleRecordsAnalyticsBasic(TestCase):
             self.assertEqual(sale_record['total_codes'], 5)
 
 
-class TestCourseRegistrationCodeAnalyticsBasic(TestCase):
+class TestCourseRegistrationCodeAnalyticsBasic(ModuleStoreTestCase):
     """ Test basic course registration codes analytics functions. """
+
     def setUp(self):
         """
         Fixtures.
         """
+        super(TestCourseRegistrationCodeAnalyticsBasic, self).setUp()
         self.course = CourseFactory.create()
         self.instructor = InstructorFactory(course_key=self.course.id)
         self.client.login(username=self.instructor.username, password='test')

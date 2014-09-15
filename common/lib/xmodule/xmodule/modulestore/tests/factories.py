@@ -6,13 +6,14 @@ from factory.containers import CyclicDefinitionError
 from uuid import uuid4
 
 from xmodule.modulestore import prefer_xmodules, ModuleStoreEnum
-from opaque_keys.edx.locations import Location, SlashSeparatedCourseKey
+from opaque_keys.edx.locations import Location
 from opaque_keys.edx.keys import UsageKey
 from xblock.core import XBlock
 from xmodule.tabs import StaticTab
 from decorator import contextmanager
 from mock import Mock, patch
-from nose.tools import assert_less_equal, assert_greater_equal, assert_equal
+from nose.tools import assert_less_equal, assert_greater_equal
+import factory
 
 
 class Dummy(object):
@@ -39,9 +40,9 @@ class CourseFactory(XModuleFactory):
     """
     Factory for XModule courses.
     """
-    org = 'MITx'
-    number = '999'
-    display_name = 'Robot Super Course'
+    org = factory.Sequence(lambda n: 'org.%d' % n)
+    number = factory.Sequence(lambda n: 'course_%d' % n)
+    display_name = factory.Sequence(lambda n: 'Run %d' % n)
 
     # pylint: disable=unused-argument
     @classmethod
@@ -61,11 +62,7 @@ class CourseFactory(XModuleFactory):
         with store.branch_setting(ModuleStoreEnum.Branch.draft_preferred):
             # Write the data to the mongo datastore
             kwargs.update(kwargs.get('metadata', {}))
-            course_key = SlashSeparatedCourseKey(org, number, run)
-            # TODO - We really should call create_course here.  However, since create_course verifies there are no
-            # duplicates, this breaks several tests that do not clean up properly in between tests.
-            new_course = store.create_xblock(None, course_key, 'course', block_id=run, fields=kwargs)
-            store.update_item(new_course, user_id, allow_not_found=True)
+            new_course = store.create_course(org, number, run, user_id, fields=kwargs)
             return new_course
 
 

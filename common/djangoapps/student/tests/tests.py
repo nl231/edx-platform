@@ -176,18 +176,14 @@ class CourseEndingTest(TestCase):
 
 
 @override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
-class DashboardTest(TestCase):
+class DashboardTest(ModuleStoreTestCase):
     """
     Tests for dashboard utility functions
     """
-    # arbitrary constant
-    COURSE_SLUG = "100"
-    COURSE_NAME = "test_course"
-    COURSE_ORG = "EDX"
 
     def setUp(self):
-        self.course = CourseFactory.create(org=self.COURSE_ORG, display_name=self.COURSE_NAME, number=self.COURSE_SLUG)
-        self.assertIsNotNone(self.course)
+        super(DashboardTest, self).setUp()
+        self.course = CourseFactory.create()
         self.user = UserFactory.create(username="jack", email="jack@fake.edx.org", password='test')
         self.client = Client()
 
@@ -670,16 +666,11 @@ class PaidRegistrationTest(ModuleStoreTestCase):
     """
     Tests for paid registration functionality (not verified student), involves shoppingcart
     """
-    # arbitrary constant
-    COURSE_SLUG = "100"
-    COURSE_NAME = "test_course"
-    COURSE_ORG = "EDX"
-
     def setUp(self):
+        super(PaidRegistrationTest, self).setUp()
         # Create course
+        self.course = CourseFactory.create()
         self.req_factory = RequestFactory()
-        self.course = CourseFactory.create(org=self.COURSE_ORG, display_name=self.COURSE_NAME, number=self.COURSE_SLUG)
-        self.assertIsNotNone(self.course)
         self.user = User.objects.create(username="jack", email="jack@fake.edx.org")
 
     @unittest.skipUnless(settings.FEATURES.get('ENABLE_SHOPPING_CART'), "Shopping Cart not enabled in settings")
@@ -704,18 +695,13 @@ class PaidRegistrationTest(ModuleStoreTestCase):
 
 
 @override_settings(MODULESTORE=TEST_DATA_MIXED_MODULESTORE)
-class AnonymousLookupTable(TestCase):
+class AnonymousLookupTable(ModuleStoreTestCase):
     """
     Tests for anonymous_id_functions
     """
-    # arbitrary constant
-    COURSE_SLUG = "100"
-    COURSE_NAME = "test_course"
-    COURSE_ORG = "EDX"
-
     def setUp(self):
-        self.course = CourseFactory.create(org=self.COURSE_ORG, display_name=self.COURSE_NAME, number=self.COURSE_SLUG)
-        self.assertIsNotNone(self.course)
+        super(AnonymousLookupTable, self).setUp()
+        self.course = CourseFactory.create()
         self.user = UserFactory()
         CourseModeFactory.create(
             course_id=self.course.id,
