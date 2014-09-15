@@ -63,7 +63,7 @@ table with type/xml element/link
      - The value that is displayed to students as the name of the sequential,
        or subsection.
    
-   release status??
+release status??
 
 
 *************************************
