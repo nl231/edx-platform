@@ -1,3 +1,5 @@
+import logging
+
 from django.http import (
     HttpResponse, HttpResponseNotModified, HttpResponseForbidden
 )
@@ -14,6 +16,7 @@ from xmodule.exceptions import NotFoundError
 # TODO: Soon as we have a reasonable way to serialize/deserialize AssetKeys, we need
 # to change this file so instead of using course_id_partial, we're just using asset keys
 
+log = logging.getLogger(__name__)
 
 class StaticContentServer(object):
     def process_request(self, request):
@@ -94,28 +97,32 @@ class StaticContentServer(object):
                     unit, byte_range = range_header.split('=')
                     # "Accept-Ranges: bytes" tells the user that only "bytes" ranges are allowed
                     if unit == 'bytes' and '-' in byte_range:
-                        first, last = byte_range.split('-')
-                        # "first" must be a valid integer
                         try:
-                            first = int(first)
+                            first, last = byte_range.split('-')
+                            # "first" must be a valid integer
                         except ValueError:
-                            pass
-                        if type(first) is int:
-                            # "last" default value is the last byte of the file
-                            # Users can ask "bytes=0-" to request the whole file when they don't know the length
+                            log.exception("Invalid Byte Range {0}", byte_range)
+                        else:
                             try:
-                                last = int(last)
+                                first = int(first)
                             except ValueError:
-                                last = content.length - 1
+                                pass
+                            if type(first) is int:
+                                # "last" default value is the last byte of the file
+                                # Users can ask "bytes=0-" to request the whole file when they don't know the length
+                                try:
+                                    last = int(last)
+                                except ValueError:
+                                    last = content.length - 1
 
-                            if 0 <= first <= last < content.length:
-                                # Valid Range attribute
-                                response = HttpResponse(content.stream_data_in_range(first, last))
-                                response['Content-Range'] = 'bytes {first}-{last}/{length}'.format(
-                                    first=first, last=last, length=content.length
-                                )
-                                response['Content-Length'] = str(last - first + 1)
-                                response.status_code = 206  # HTTP_206_PARTIAL_CONTENT
+                                if 0 <= first <= last < content.length:
+                                    # Valid Range attribute
+                                    response = HttpResponse(content.stream_data_in_range(first, last))
+                                    response['Content-Range'] = 'bytes {first}-{last}/{length}'.format(
+                                        first=first, last=last, length=content.length
+                                    )
+                                    response['Content-Length'] = str(last - first + 1)
+                                    response.status_code = 206  # HTTP_206_PARTIAL_CONTENT
                 if not response:
                     # Malformed Range attribute
                     response = HttpResponse()
