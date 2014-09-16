@@ -18,9 +18,16 @@ This document is intended for those developing edX courses through edXML.
    what-is-edxml
    getting-started
    tasks/index
-   reference/index
-   xml-reference/index
+   policies/index
+   assets/index
+   about/index
+   pages/index
+   organizing-course/index
+   components/index
+   problem-xml/index
+   advanced-components/index
+   drafts/index
    demo-course/index
-   problem_xml/index
+
 
  

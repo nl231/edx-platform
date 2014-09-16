@@ -1,11 +1,10 @@
-###########
-Problem XML
-###########
+#################################
+edXML for Problems and Tools
+#################################
 
 .. toctree::
    :maxdepth: 2
 
-   annotation
    checkbox
    chemical_equation
    circuit_schematic_builder
@@ -19,20 +18,17 @@ Problem XML
    google_hangout
    iframe
    image_mapped_input
-   lti_component
    math_expression_input
    mathjax
    molecule_editor
    mult_choice_num_input
    multiple_choice
    numerical_input
-   open_response_assessment
    periodic_table
    poll
    problem_in_latex
    problem_with_hint
-   proein_builder
+   protein_builder
    text_input
-   vital_source
-   word_cloud
+   vitalsource
    zooming_image

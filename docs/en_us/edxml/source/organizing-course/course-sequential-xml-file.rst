@@ -11,7 +11,7 @@ A course sequential file:
 Create Course Sequential Files
 *******************************
 
-You ceate a course sequential XML file in the ``sequential`` directory for each subsection in your course.
+You create a course sequential XML file in the ``sequential`` directory for each subsection in your course.
 
 The name of the sequential file must match the value of the @url_name attribute of the ``sequential`` element in the chapter XML file.
 
