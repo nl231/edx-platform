@@ -73,8 +73,9 @@ when submitting comments on a PR:
   with a persuasive response.
 
 * **Nit(pick)** - A comment tagged with "Nitpick" indicates the reviewer has a petty
-  criticism that is not critical to address, but considers important to share in the
-  given context.
+  criticism that *may* not be critical to address, but considers important to share
+  in the given context. Contributors should still seriously consider and weigh these
+  nits and address them in the spirit of maintaining high quality code.
 
 * **FYI** - A comment tagged with "FYI" is a related side comment that may be
   informative, but with the intention of having no required immediate action.
