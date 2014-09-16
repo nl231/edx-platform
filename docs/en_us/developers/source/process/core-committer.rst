@@ -68,11 +68,11 @@ when submitting comments on a PR:
   their requested change to the code and feels the PR should not be merged unless
   their concern is satisfactorily addressed.
 
-* **Optional** - A comment tagged with "Optional" indicates the reviewer strongly
+* **Opt(ional)** - A comment tagged with "Optional" indicates the reviewer strongly
   favors their suggestion, but may be agreeable to the current behavior, especially
   with a persuasive response.
 
-* **Nitpick** - A comment tagged with "Nitpick" indicates the reviewer has a petty
+* **Nit(pick)** - A comment tagged with "Nitpick" indicates the reviewer has a petty
   criticism that is not critical to address, but considers important to share in the
   given context.
 
