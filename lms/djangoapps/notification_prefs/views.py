@@ -9,10 +9,13 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
+from rest_framework import generics
 
 from edxmako.shortcuts import render_to_response
 from notification_prefs import NOTIFICATION_PREF_KEY
+from notification_prefs.serializers import NotifierUserSerializer
 from user_api.models import UserPreference
+from user_api.views import ApiKeyHeaderPermission
 
 
 class UsernameDecryptionException(Exception):
@@ -186,3 +189,13 @@ def set_subscription(request, token, subscribe):  # pylint: disable=unused-argum
     else:
         UserPreference.objects.filter(user=user, key=NOTIFICATION_PREF_KEY).delete()
         return render_to_response("unsubscribe.html", {'token': token})
+
+
+class NotifierUsersListView(generics.ListAPIView):
+    permission_classes = (ApiKeyHeaderPermission,)
+    serializer_class = NotifierUserSerializer
+    paginate_by = 10
+    paginate_by_param = "page_size"
+
+    def get_queryset(self):
+        return User.objects.filter(preferences__key=NOTIFICATION_PREF_KEY).prefetch_related("profile", "courseenrollment_set", "roles__permissions")

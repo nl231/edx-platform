@@ -8,12 +8,26 @@ from django.test.client import Client, RequestFactory
 from django.test.utils import override_settings
 from mock import Mock, patch
 
+from course_groups.models import CourseUserGroup
+from django_comment_common.models import Role, Permission
+from lang_pref import LANGUAGE_KEY
 from notification_prefs import NOTIFICATION_PREF_KEY
-from notification_prefs.views import ajax_enable, ajax_disable, ajax_status, set_subscription, UsernameCipher
-from student.tests.factories import UserFactory
+from notification_prefs.views import (
+    ajax_enable,
+    ajax_disable,
+    ajax_status,
+    set_subscription,
+    UsernameCipher,
+    NotifierUsersListView,
+)
+from student.tests.factories import UserFactory, CourseEnrollmentFactory
 from edxmako.tests import mako_middleware_process_request
 from user_api.models import UserPreference
 from util.testing import UrlResetMixin
+from xmodule.modulestore.tests.factories import CourseFactory
+
+
+TEST_API_KEY = "test_api_key"
 
 
 @override_settings(SECRET_KEY="test secret key")
@@ -65,6 +79,8 @@ class NotificationPrefViewTest(UrlResetMixin, TestCase):
             UserPreference.objects.filter(user=user, key=NOTIFICATION_PREF_KEY).exists()
         )
 
+
+class AjaxViewsTest(NotificationPrefViewTest):
     # AJAX status view
 
     def test_ajax_status_get_0(self):
@@ -176,8 +192,8 @@ class NotificationPrefViewTest(UrlResetMixin, TestCase):
         self.assertEqual(response.status_code, 204)
         self.assertNotPrefExists(self.user)
 
-    # Unsubscribe view
 
+class SetSubscriptionTest(NotificationPrefViewTest):
     def test_unsubscribe_post(self):
         request = self.request_factory.post("dummy")
         response = set_subscription(request, "dummy", subscribe=False)
@@ -255,3 +271,135 @@ class NotificationPrefViewTest(UrlResetMixin, TestCase):
 
         for user in self.tokens.keys():
             test_user(user)
+
+
+@override_settings(EDX_API_KEY=TEST_API_KEY)
+class NotifierUsersListViewTest(NotificationPrefViewTest):
+    def setUp(self):
+        super(NotifierUsersListViewTest, self).setUp()
+        self.moderator = UserFactory.create(username="testmoderator")
+        self.tokens[self.moderator] = "AAAAAAAAAAAAAAAAAAAAAJHMWxIpsgP14ZTocoW4bvY="
+        self.create_prefs()
+        self.cohorted_course = CourseFactory.create(
+            number="Cohorts101",
+            cohort_config={"cohorted": True}
+        )
+        self.non_cohorted_course = CourseFactory.create(number="NoCohorts101")
+        moderator_perm = Permission(name="see_all_cohorts")
+        moderator_perm.save()
+        for course in [self.cohorted_course, self.non_cohorted_course]:
+            for user in [self.user, self.moderator]:
+                CourseEnrollmentFactory.create(user=user, course_id=course.id)
+            moderator_role = Role(name="Moderator", course_id=course.id)
+            moderator_role.save()
+            moderator_role.permissions.add(moderator_perm)
+            self.moderator.roles.add(moderator_role)
+
+    def _get_results(self):
+        request = RequestFactory().get("dummy", HTTP_X_EDX_API_KEY=TEST_API_KEY)
+        response = NotifierUsersListView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            set(response.data.keys()),
+            {"count", "next", "previous", "results"}
+        )
+        return response.data["results"]
+
+    def _assert_user_correct(self, results, user_obj, expected_course_info):
+        result_user = next((result for result in results if result["id"] == user_obj.id), None)
+        self.assertEqual(
+            set(result_user.keys()),
+            {"id", "email", "name", "preferences", "course_info"}
+        )
+        self.assertEqual(result_user["email"], user_obj.email)
+        self.assertEqual(result_user["name"], user_obj.profile.name)
+        self.assertEqual(
+            set(result_user["preferences"].keys()),
+            {NOTIFICATION_PREF_KEY} # TODO: Should also set and check for LANGUAGE_KEY
+        )
+        self.assertEqual(result_user["course_info"], expected_course_info)
+
+    def test_without_api_key(self):
+        request = RequestFactory().get("dummy")
+        response = NotifierUsersListView.as_view()(request)
+        self.assertEqual(response.status_code, 403)
+
+    def test_get_without_cohorts_assigned(self):
+        results = self._get_results()
+
+        self._assert_user_correct(
+            results,
+            self.user,
+            {
+                self.cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": None,
+                    "see_all_cohorts": False,
+                },
+                self.non_cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": None,
+                    "see_all_cohorts": True,
+                },
+            }
+        )
+        self._assert_user_correct(
+            results,
+            self.moderator,
+            {
+                self.cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": None,
+                    "see_all_cohorts": True,
+                },
+                self.non_cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": None,
+                    "see_all_cohorts": True,
+                },
+            }
+        )
+
+    def test_get_with_cohorts_assigned(self):
+        cohort = CourseUserGroup(
+            name="Test Cohort",
+            course_id=self.cohorted_course.id,
+            group_type=CourseUserGroup.COHORT
+        )
+        cohort.save()
+        for user in [self.user, self.moderator]:
+            cohort.users.add(user)
+
+        results = self._get_results()
+
+        self._assert_user_correct(
+            results,
+            self.user,
+            {
+                self.cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": cohort.id,
+                    "see_all_cohorts": False,
+                },
+                self.non_cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": None,
+                    "see_all_cohorts": True,
+                },
+            }
+        )
+        self._assert_user_correct(
+            results,
+            self.moderator,
+            {
+                self.cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": cohort.id,
+                    "see_all_cohorts": True,
+                },
+                self.non_cohorted_course.id.to_deprecated_string(): {
+                    "cohort_id": None,
+                    "see_all_cohorts": True,
+                },
+            }
+        )
+
+    # Test cases:
+    #   No enrollments?
+    #   Different enrollments per user?
+    #   Moderator in some but not all enrolled courses?
+    #   Exclusion of excess preferences
+    #   Pagination
