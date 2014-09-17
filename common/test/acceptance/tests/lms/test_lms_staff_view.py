@@ -3,11 +3,11 @@
 E2E tests for the LMS.
 """
 
-from .helpers import UniqueCourseTest
-from ..pages.studio.auto_auth import AutoAuthPage
-from ..pages.lms.courseware import CoursewarePage
-from ..pages.lms.staff_view import StaffPage
-from ..fixtures.course import CourseFixture, XBlockFixtureDesc
+from ..helpers import UniqueCourseTest
+from ...pages.studio.auto_auth import AutoAuthPage
+from ...pages.lms.courseware import CoursewarePage
+from ...pages.lms.staff_view import StaffPage
+from ...fixtures.course import CourseFixture, XBlockFixtureDesc
 from textwrap import dedent
 
 

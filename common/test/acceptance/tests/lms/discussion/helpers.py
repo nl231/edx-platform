@@ -4,7 +4,7 @@ Helper functions and classes for discussion tests.
 
 from uuid import uuid4
 
-from ...fixtures.discussion import (
+from ....fixtures.discussion import (
     SingleThreadViewFixture,
     Thread,
     Response,
