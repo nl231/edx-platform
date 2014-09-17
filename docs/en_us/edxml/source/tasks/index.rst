@@ -7,3 +7,4 @@ edXML Uses
   :maxdepth: 2
 
   import-studio
+  deploy-lms

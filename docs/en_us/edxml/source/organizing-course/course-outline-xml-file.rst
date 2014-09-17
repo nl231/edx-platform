@@ -1,3 +1,5 @@
+.. _The Course Outline XML File:
+
 ############################
 The Course Outline XML File
 ############################
@@ -6,14 +8,21 @@ The course outline file:
 
 * Defines common settings for your course.
 * Organizes sections, or chapters, in your course.
+  
+See:
+* `Create the Course Outline File`_
+* `The Course Outline File Elements`_
+* `course Element Attributes`_
+* `Example Course Outline File`_
 
 *******************************
 Create the Course Outline File
 *******************************
 
-You ceate the course outline XML file in the ``course`` directory.
+You create the course outline XML file in the ``course`` directory.
 
-The name of the course outline file must match the value of the @url attribute of the ``course`` element in the ``courses.xml`` file.
+The name of the course outline file must match the value of the @url attribute
+of the ``course`` element in the ``courses.xml`` file.
 
 For example, if the ``course.xml`` file contains:
 
@@ -86,7 +95,8 @@ WE NEED COMPLETE ADVANCED SETTINGS DOCUMENTATION TO DO THIS
 Example Course Outline File
 *************************************
 
-The following example shows a course outline file with three chapters (sections) and a course wiki:
+The following example shows a course outline file with three chapters
+(sections) and a course wiki:
 
 .. code-block:: xml
   

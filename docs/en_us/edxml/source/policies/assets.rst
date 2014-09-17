@@ -1,5 +1,7 @@
+.. _Course Asset Policy:
+
 #################################
-Asset Policy
+Course Asset Policy
 #################################
 
 

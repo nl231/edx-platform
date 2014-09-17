@@ -2,15 +2,24 @@
 Discussion Components
 #################################
 
-You can add inline discussion components to a vertical, or unit, in your course.
+You can add inline discussion components to a vertical, or unit, in your
+course.
+
+See:
+* `Create the XML File for a Discussion Component`_
+* `Discussion Component XML File Elements`_
+* `discussion Element Attributes`_
+* `Example Discussion Component XML File`_
 
 **********************************************
 Create the XML File for a Discussion Component
 **********************************************
 
-You create an XML file in the ``discussion`` directory for each inline discussion component in your course.
+You create an XML file in the ``discussion`` directory for each inline
+discussion component in your course.
 
-The name of the XML file must match the value of the @url_name attribute of the ``discussion`` element in the vertical XML file.
+The name of the XML file must match the value of the @url_name attribute of the
+``discussion`` element in the vertical XML file.
 
 For example, if the vertical XML file contains:
 
@@ -21,13 +30,15 @@ For example, if the vertical XML file contains:
       . . .
   </vertical>
 
-You create the file ``discussion/Introduce_Yourself.xml`` to define the inline discussion component.
+You create the file ``discussion/Introduce_Yourself.xml`` to define the inline
+discussion component.
 
 *************************************
 Discussion Component XML File Elements
 ************************************* 
 
-The root element of the XML file for the HTML component is file is ``discussion``. 
+The root element of the XML file for the HTML component is file is
+``discussion``.
 
 The ``discussion`` element contains not children.
 

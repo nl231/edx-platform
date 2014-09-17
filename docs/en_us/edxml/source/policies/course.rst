@@ -1,3 +1,5 @@
+.. _Course Policies:
+
 #################################
 Course Policies
 #################################
@@ -39,7 +41,7 @@ Course Policy JSON fields
      * - ``end_of_course_survey_url``
        - The url for an end of course survey. The link is shown after the course is over, next to certificate download links.
      * - ``tabs``
-       - Custom pages, or tabs, in the courseware.  See below for details on config.
+       - Custom pages, or tabs, in the courseware.  See below for details.
      * - ``discussion_blackouts``
        - An array of time intervals during which students cannot create or edit discussion posts. Moderators, Community TAs, and Administrators are not restricted by these dates. For example, you could specify blackout dates during exams. For example: ``[[""2012-10-29T04:00", "2012-11-03T04:00"], ["2012-12-30T04:00", "2013-01-02T04:00"]]``. Moderators, Community TAs, and Administrators are not restricted during blackout periods.
      * - ``show_calculator``

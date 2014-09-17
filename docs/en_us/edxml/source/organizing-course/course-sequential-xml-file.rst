@@ -1,3 +1,5 @@
+.. _Course Sequential XML Files:
+
 ############################
 Course Sequential XML Files
 ############################
@@ -6,14 +8,23 @@ A course sequential file:
 
 * Defines the display name and release date for the sequential, or subsection.
 * Organizes units within the sequential.
+  
+See:
+* `Create Course Sequential Files`_
+* `Sequential File Elements`_
+* `sequential Element Attributes`_
+* `Example Sequential File`_
+
 
 *******************************
 Create Course Sequential Files
 *******************************
 
-You create a course sequential XML file in the ``sequential`` directory for each subsection in your course.
+You create a course sequential XML file in the ``sequential`` directory for
+each subsection in your course.
 
-The name of the sequential file must match the value of the @url_name attribute of the ``sequential`` element in the chapter XML file.
+The name of the sequential file must match the value of the @url_name attribute
+of the ``sequential`` element in the chapter XML file.
 
 For example, if the chapter file contains:
 

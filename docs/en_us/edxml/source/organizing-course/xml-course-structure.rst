@@ -1,3 +1,5 @@
+.. edXML Course Structure:
+
 ##########################
 edXML Course Structure
 ##########################

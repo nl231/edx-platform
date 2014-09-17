@@ -1,3 +1,5 @@
+.. _What is edXML?:
+
 ######################
 What is edXML?
 ######################
@@ -13,7 +15,7 @@ System (LMS).
 XML Resources
 **************
 
-edXML is based on XML. XML, or Extensibile Markup Language, is a set of rules
+edXML is based on XML. XML, or Extensible Markup Language, is a set of rules
 for creating documents in a format that is both human-readable and machine-
 readable.
 
@@ -22,9 +24,6 @@ document presumes you understand XML and can use tools to create and edit XML
 files.
 
 For a primer on XML, see the `Wikipedia XML entry`_ . 
-
-
-
 
 
 .. include:: links.rst

@@ -1,3 +1,5 @@
+.. _Group Configuration for Content Experiments:
+
 ############################################
 Group Configuration for Content Experiments
 ############################################

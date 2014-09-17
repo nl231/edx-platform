@@ -1,8 +1,16 @@
+.. _The course.xml File:
+
 ##########################
 The ``course.xml`` File
 ##########################
 
 You begin developing a course with a ``course.xml`` file, which you place in the top level directory.
+
+See:
+
+* `course.xml File Elements`_
+* `course Element Attributes`_
+* `course Element Attributes and Course URLS`_
 
 *************************************
 ``course.xml`` File Elements

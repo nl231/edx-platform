@@ -1,3 +1,5 @@
+.. _Course Vertical XML Files:
+
 ############################
 Course Vertical XML Files
 ############################
@@ -6,16 +8,23 @@ A course vertical file:
 
 * Defines the display name for the vertical, or unit.
 * Organizes components and other verticals in the vertical.
-* A/B Tests??
+
+See:
+* `Create Course Vertical Files`_
+* `Vertical File Elements`_
+* `vertical Element Attributes`_
+* `Example Vertical File`_
 
 
 *******************************
 Create Course Vertical Files
 *******************************
 
-You ceate a course vertical XML file in the ``vertical`` directory for each unit in your course.
+You create a course vertical XML file in the ``vertical`` directory for each
+unit in your course.
 
-The name of the vertical file must match the value of the @url_name attribute of ``vertical`` element in the sequential XML file.
+The name of the vertical file must match the value of the @url_name attribute
+of ``vertical`` element in the sequential XML file.
 
 For example, if the sequential file contains:
 
@@ -35,15 +44,19 @@ Vertical File Elements
 
 The root element of the vertical file is ``vertical``. 
 
-The ``vertical`` element contains one or more child elements for each component in the vertical.
+The ``vertical`` element contains one or more child elements for each component
+in the vertical.
 
-.. note:: A vertical element can also contain a vertical element. You can nest verticals, or units, recursively.
+.. note:: 
+ A vertical element can also contain a vertical element. You can nest
+ verticals, or units, recursively.
 
 ==============================
 ``vertical`` Element Children
 ==============================
 
-Child elements or ``vertical`` refer to components in your course.  The edX Platform supports a wide range of components, including custom XBlocks. 
+Child elements or ``vertical`` refer to components in your course.  The edX
+Platform supports a wide range of components, including custom XBlocks.
 
 Types of supported components include:
 

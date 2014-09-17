@@ -1,11 +1,19 @@
+.. _HTML Components:
+
 #################################
 HTML Components
 #################################
 
-To add an HTML component to your course, you create an:
+To add an HTML component to your course, you create both XML and HTML files.
 
-* .xml file
-* .html file
+See:
+* `Create the XML File for an HTML Component`_
+* `HTML Component XML File Elements`_
+* `html Element Attributes`_
+* `Example HTML Component XML File`_
+* `Create the HTML File for an HTML Component`_
+* `Example HTML Component Content`_
+
   
 Both files, for each component, must be in the ``html`` directory.
 

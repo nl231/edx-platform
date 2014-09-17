@@ -1,3 +1,5 @@
+.. _Course Chapter XML Files:
+
 ############################
 Course Chapter XML Files
 ############################
@@ -6,14 +8,22 @@ A course chapter file:
 
 * Defines the display name and release date for the chapter
 * Organizes subsections within the chapter.
+  
+See:
+* `Create Course Chapter Files`_
+* `Chapter File Elements`_
+* `chapter Element Attributes`_
+* `Example Chapter File`_
 
 *******************************
 Create Course Chapter Files
 *******************************
 
-You ceate a course chapter XML file in the ``chapter`` directory for each chapter, or section, in your course.
+You create a course chapter XML file in the ``chapter`` directory for each
+chapter, or section, in your course.
 
-The name of the chapter file must match the value of the @url_name attribute of ``chapter`` element in the course outline XML file.
+The name of the chapter file must match the value of the @url_name attribute of
+``chapter`` element in the course outline XML file.
 
 For example, if the course outline file contains:
 
@@ -39,7 +49,8 @@ The ``chapter`` element contains one or more child ``sequential`` elements.
 ``sequential`` Element
 ======================
 
-The ``sequential`` element references a sequential, or subsection, in the course.
+The ``sequential`` element references a sequential, or subsection, in the
+course.
 
 The ``sequential`` element contains one attribute:
 

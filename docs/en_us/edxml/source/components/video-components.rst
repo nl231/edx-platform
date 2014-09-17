@@ -1,16 +1,26 @@
+.. _Video Components:
+
 #################################
 Video Components
 #################################
 
 You can add video components to a vertical, or unit, in your course.
 
+See:
+* `Create the XML File for a Video Component`_
+* `Video Component XML File Elements`_
+* `video Element Attributes`_
+* `Example Video Component XML File`_
+
 **********************************************
 Create the XML File for a Video Component
 **********************************************
 
-You create an XML file in the ``video`` directory for each video component in your course.
+You create an XML file in the ``video`` directory for each video component in
+your course.
 
-The name of the XML file must match the value of the @url_name attribute of the ``video`` element in the vertical XML file.
+The name of the XML file must match the value of the @url_name attribute of the
+``video`` element in the vertical XML file.
 
 For example, if the vertical XML file contains:
 
@@ -21,7 +31,8 @@ For example, if the vertical XML file contains:
       . . .
   </vertical>
 
-You create the file ``video/Introduction_Lecture.xml`` to define the video component.
+You create the file ``video/Introduction_Lecture.xml`` to define the video
+component.
 
 *************************************
 Video Component XML File Elements
