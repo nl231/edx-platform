@@ -1,5 +1,5 @@
 #################################
-edXML for Course Components
+Course Components
 #################################
 
 .. toctree::

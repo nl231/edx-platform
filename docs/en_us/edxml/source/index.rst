@@ -16,8 +16,8 @@ This document is intended for those developing edX courses through edXML.
    :maxdepth: 2
 
    what-is-edxml
-   getting-started
    tasks/index
+   getting-started
    policies/index
    assets/index
    about/index

@@ -1,5 +1,5 @@
 #################################
-edXML for Course Assets
+Course Assets
 #################################
 
 .. toctree::

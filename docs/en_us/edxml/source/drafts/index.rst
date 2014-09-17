@@ -1,5 +1,5 @@
 #################################
-edXML for Drafts
+Draft Course Content
 #################################
 
 .. toctree::

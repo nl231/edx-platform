@@ -1,5 +1,5 @@
 #################################
-edXML for About Pages
+The Course About Pages
 #################################
 
 .. toctree::

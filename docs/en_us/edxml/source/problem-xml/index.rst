@@ -1,5 +1,5 @@
 #################################
-edXML for Problems and Tools
+Problems and Tools
 #################################
 
 .. toctree::

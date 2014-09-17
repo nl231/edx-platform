@@ -1,5 +1,5 @@
 #################################
-edXML for Advanced Components
+Advanced Components
 #################################
 
 .. toctree::
