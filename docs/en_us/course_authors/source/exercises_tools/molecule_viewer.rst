@@ -6,7 +6,7 @@ Molecule Viewer Tool
 
 Students can use the molecule viewer to see three-dimensional representations of molecules. 
 
-
+(image of molecule in LMS)
 
 The molecule editor incorporates JSmol, a JavaScript-based molecular viewer from Jmol. (You don't need to download this tool; Studio uses it automatically.) For more information about JSmol, see `JSmol <http://sourceforge.net/projects/jsmol/>`_.
 
@@ -18,11 +18,7 @@ The molecule editor incorporates JSmol, a JavaScript-based molecular viewer from
 Create the Molecule Viewer Tool
 *******************************
 
-.. note:: Before you begin:
-
-  * Make sure you have a tool that can compress files into a .zip folder.
-
-  * Make sure you have permission to upload files to a third-party file hosting site such as Amazon Web Services Simple Storage Service (AWS S3). When you create the molecule viewer, you'll upload a .zip file to the file hosting site. 
+.. note:: Before you begin, make sure you have permission to upload files to a third-party file hosting site such as Amazon Web Services Simple Storage Service (AWS S3). When you create the molecule viewer, you'll upload a .zip file to the file hosting site. 
 
 
 To create the molecule viewer tool, you'll download and edit some files, upload the files to a file hosting site, and then create a component in Studio that references those files.
