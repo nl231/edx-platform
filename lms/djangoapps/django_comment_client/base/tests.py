@@ -110,7 +110,7 @@ class ThreadActionGroupIdTestCase(
         response = self.call_view(
             "update_thread",
             mock_request,
-            post_params={"body": "body", "title": "title"}
+            post_params={"body": "body", "title": "title", "commentable_id": "commentable_id"}
         )
         self._assert_json_response_contains_group_info(response)
 
