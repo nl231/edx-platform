@@ -73,7 +73,7 @@ masq = (function(){
 
     el.click(function(){
         if (el.attr("disabled")) {
-           return alert("${_("Since the course is not yet visible to students or beta testers, there's nothing to see here.")}");
+           return alert("${_("You cannot view the course as a student or beta tester before the course release date.")}");
         }
         $.ajax({ url: '/masquerade/toggle',
                  type: 'GET',
