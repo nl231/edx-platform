@@ -32,6 +32,9 @@ starts follow.
   Dates for Your Course`.
 * Review the grading policy, and set a grace period for homework assignment
   due dates. See :ref:`Establish a Grading Policy`.
+* Confirm that any optional features that you want your course to include, such
+  as cohorted discussions, are enabled and configured. See :ref:`Cohorted
+  Discussions`.
 
 **Review First Week Content**
 
