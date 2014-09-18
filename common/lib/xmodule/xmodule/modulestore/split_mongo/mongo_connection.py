@@ -6,7 +6,6 @@ import pymongo
 from contracts import check
 from xmodule.exceptions import HeartbeatFailure
 from xmodule.modulestore.split_mongo import BlockKey
-from datetime import tzinfo
 import datetime
 import pytz
 
@@ -260,4 +259,3 @@ class MongoConnection(object):
             ],
             unique=True
         )
-

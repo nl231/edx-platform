@@ -288,11 +288,10 @@ def check_mongo_calls(num_finds=0, num_sends=None):
         num_finds
     ):
         if num_sends is not None:
-            with check_sum_of_calls(
+            with check_exact_number_of_calls(
                 pymongo.message,
-                ['insert', 'update', 'delete'],
+                '_do_batched_write_command',
                 num_sends,
-                num_sends
             ):
                 yield
         else:
