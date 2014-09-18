@@ -208,28 +208,36 @@ def course_handler(request, course_key_string=None):
     DELETE
         json: delete this branch from this course (leaving off /branch/draft would imply delete the course)
     """
-    response_format = request.REQUEST.get('format', 'html')
-    if response_format == 'json' or 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json'):
-        if request.method == 'GET':
-            course_module = _get_course_module(CourseKey.from_string(course_key_string), request.user, depth=None)
-            return JsonResponse(_course_outline_json(request, course_module))
-        elif request.method == 'POST':  # not sure if this is only post. If one will have ids, it goes after access
-            return _create_or_rerun_course(request)
-        elif not has_course_access(request.user, CourseKey.from_string(course_key_string)):
-            raise PermissionDenied()
-        elif request.method == 'PUT':
-            raise NotImplementedError()
-        elif request.method == 'DELETE':
-            raise NotImplementedError()
+    import cProfile
+    import uuid
+    pr = cProfile.Profile()
+    pr.enable()
+    try:
+        response_format = request.REQUEST.get('format', 'html')
+        if response_format == 'json' or 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json'):
+            if request.method == 'GET':
+                course_module = _get_course_module(CourseKey.from_string(course_key_string), request.user, depth=None)
+                return JsonResponse(_course_outline_json(request, course_module))
+            elif request.method == 'POST':  # not sure if this is only post. If one will have ids, it goes after access
+                return _create_or_rerun_course(request)
+            elif not has_course_access(request.user, CourseKey.from_string(course_key_string)):
+                raise PermissionDenied()
+            elif request.method == 'PUT':
+                raise NotImplementedError()
+            elif request.method == 'DELETE':
+                raise NotImplementedError()
+            else:
+                return HttpResponseBadRequest()
+        elif request.method == 'GET':  # assume html
+            if course_key_string is None:
+                return course_listing(request)
+            else:
+                return course_index(request, CourseKey.from_string(course_key_string))
         else:
-            return HttpResponseBadRequest()
-    elif request.method == 'GET':  # assume html
-        if course_key_string is None:
-            return course_listing(request)
-        else:
-            return course_index(request, CourseKey.from_string(course_key_string))
-    else:
-        return HttpResponseNotFound()
+            return HttpResponseNotFound()
+    finally:
+        pr.disable()
+        pr.dump_stats("contentstore_views_course_handler_{0}_6f885a8e86.profile".format(uuid.uuid4()))
 
 
 @login_required
