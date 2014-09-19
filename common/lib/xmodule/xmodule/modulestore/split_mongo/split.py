@@ -187,7 +187,7 @@ class SplitBulkWriteMixin(BulkOperationsMixin):
             raise TypeError(u'{!r} is not a CourseLocator'.format(course_key))
         # handle version_guid based retrieval locally
         if course_key.org is None or course_key.course is None or course_key.run is None:
-            return self._active_bulk_ops.records[
+            return self.bulk_records[
                 course_key.replace(org=None, course=None, run=None, branch=None)
             ]
 
@@ -203,9 +203,9 @@ class SplitBulkWriteMixin(BulkOperationsMixin):
             raise TypeError('{!r} is not a CourseLocator'.format(course_key))
 
         if course_key.org and course_key.course and course_key.run:
-            del self._active_bulk_ops.records[course_key.replace(branch=None, version_guid=None)]
+            del self.bulk_records[course_key.replace(branch=None, version_guid=None)]
         else:
-            del self._active_bulk_ops.records[
+            del self.bulk_records[
                 course_key.replace(org=None, course=None, run=None, branch=None)
             ]
 

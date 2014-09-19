@@ -130,9 +130,15 @@ class ActiveBulkThread(threading.local):
     """
     Add the expected vars to the thread.
     """
-    def __init__(self, bulk_ops_record_type, **kwargs):
+    def __init__(self, **kwargs):
         super(ActiveBulkThread, self).__init__(**kwargs)
-        self.records = defaultdict(bulk_ops_record_type)
+        self._records = {}
+
+    def get_records(self, modulestore):
+        return self._records.setdefault(modulestore.__class__, defaultdict(modulestore._bulk_ops_record_type))
+
+
+GLOBAL_ACTIVE_BULK_OPS = ActiveBulkThread()
 
 
 class BulkOperationsMixin(object):
@@ -149,7 +155,11 @@ class BulkOperationsMixin(object):
     """
     def __init__(self, *args, **kwargs):
         super(BulkOperationsMixin, self).__init__(*args, **kwargs)
-        self._active_bulk_ops = ActiveBulkThread(self._bulk_ops_record_type)
+        self._active_bulk_ops = GLOBAL_ACTIVE_BULK_OPS.get_records(self)
+
+    @property
+    def bulk_records(self):
+         return GLOBAL_ACTIVE_BULK_OPS.get_records(self)
 
     @contextmanager
     def bulk_operations(self, course_id):
@@ -178,21 +188,21 @@ class BulkOperationsMixin(object):
 
         # Retrieve the bulk record based on matching org/course/run (possibly ignoring case)
         if ignore_case:
-            for key, record in self._active_bulk_ops.records.iteritems():
+            for key, record in self.bulk_records.iteritems():
                 if (
                     key.org.lower() == course_key.org.lower() and
                     key.course.lower() == course_key.course.lower() and
                     key.run.lower() == course_key.run.lower()
                 ):
                     return record
-        return self._active_bulk_ops.records[course_key.for_branch(None)]
+        return self.bulk_records[course_key.for_branch(None)]
 
     @property
     def _active_records(self):
         """
         Yield all active (CourseLocator, BulkOpsRecord) tuples.
         """
-        for course_key, record in self._active_bulk_ops.records.iteritems():
+        for course_key, record in self.bulk_records.iteritems():
             if record.active:
                 yield (course_key, record)
 
@@ -200,7 +210,7 @@ class BulkOperationsMixin(object):
         """
         Clear the record for this course
         """
-        del self._active_bulk_ops.records[course_key.for_branch(None)]
+        del self.bulk_records[course_key.for_branch(None)]
 
     def _start_outermost_bulk_operation(self, bulk_ops_record, course_key):
         """
