@@ -4,13 +4,13 @@ Tests related to the cohorting feature.
 from uuid import uuid4
 
 from .helpers import BaseDiscussionMixin
-from ..helpers import CohortTestMixin
-from ...helpers import UniqueCourseTest
-from ....pages.lms.auto_auth import AutoAuthPage
-from ....fixtures.course import (CourseFixture, XBlockFixtureDesc)
+from ..lms.helpers import CohortTestMixin
+from ..helpers import UniqueCourseTest
+from ...pages.lms.auto_auth import AutoAuthPage
+from ...fixtures.course import (CourseFixture, XBlockFixtureDesc)
 
-from ....pages.lms.discussion import (DiscussionTabSingleThreadPage, InlineDiscussionThreadPage, InlineDiscussionPage)
-from ....pages.lms.courseware import CoursewarePage
+from ...pages.lms.discussion import (DiscussionTabSingleThreadPage, InlineDiscussionThreadPage, InlineDiscussionPage)
+from ...pages.lms.courseware import CoursewarePage
 
 from nose.plugins.attrib import attr
 

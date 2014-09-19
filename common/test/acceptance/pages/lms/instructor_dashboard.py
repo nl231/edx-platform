@@ -61,7 +61,7 @@ class MembershipPage(PageObject):
         Returns the name of the selected cohort.
         """
         return self._name_without_count(
-            self._get_cohort_options().filter(lambda el: el.is_selected())[0].text
+            self._get_cohort_options().filter(lambda el: el.is_selected()).first.text[0]
         )
 
     def select_cohort(self, cohort_name):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-E2E tests related to the cohort management on the LMS Instructor Dashboard
+End-to-end tests related to the cohort management on the LMS Instructor Dashboard
 """
 
 from .helpers import CohortTestMixin

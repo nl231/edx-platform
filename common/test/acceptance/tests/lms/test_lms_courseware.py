@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-E2E tests for the LMS.
+End-to-end tests for the LMS.
 """
 import time
 
