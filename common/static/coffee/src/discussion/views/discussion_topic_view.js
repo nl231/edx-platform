@@ -23,9 +23,9 @@
             },
 
             /**
-             * Because we want the behavior that when the body is clicked the menu is
-             * closed, we need to ignore clicks in the search field and stop propagation.
-             * Without this, clicking the search field would also close the menu.
+             * When the menu is expanded, a click on the body element (outside of the menu) or on a menu element
+             * should close the menu except when the target is the search field. To accomplish this, we have to ignore
+             * clicks on the search field by stopping the propagation of the event.
              */
             ignoreClick: function(event) {
                 event.stopPropagation();
