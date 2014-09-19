@@ -73,7 +73,7 @@ browser and pasting the output.  When that file changes, this one should be rege
 <script aria-hidden="true" type="text/template" id="thread-edit-template">
     <h1>Editing post</h1>
     <ul class="edit-post-form-errors"></ul>
-    <div class="forum-edit-post-panel"></div>
+    <div class="forum-edit-post-form-wrapper"></div>
     <div class="form-row">
       <label class="sr" for="edit-post-title">Edit post title</label>
       <input type="text" id="edit-post-title" class="edit-post-title" name="title" value="<%-title %>" placeholder="Title">
@@ -318,7 +318,7 @@ browser and pasting the output.  When that file changes, this one should be rege
                 Questions raise issues that need answers. Discussions share ideas and start conversations.
             </span>
         </div>
-        <div class="forum-new-post-panel"></div>
+        <div class="forum-new-post-form-wrapper"></div>
         <% if (cohort_options) { %>
         <div class="post-field">
             <label class="field-label">
@@ -384,9 +384,7 @@ browser and pasting the output.  When that file changes, this one should be rege
 
 <script aria-hidden="true" type="text/template" id="topic-template">
     <div class="field-label">
-        <span class="field-label-text">
-            Topic Area:
-        </span><div class="field-input post-topic">
+        <span class="field-label-text">Topic Area:</span><div class="field-input post-topic">
             <a href="#" class="post-topic-button">
                 <span class="sr">Discussion topics; current selection is: </span>
                 <span class="js-selected-topic"></span>

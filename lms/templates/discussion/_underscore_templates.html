@@ -56,7 +56,7 @@
 <script aria-hidden="true" type="text/template" id="thread-edit-template">
     <h1>${_("Editing post")}</h1>
     <ul class="post-errors"></ul>
-    <div class="forum-edit-post-panel"></div>
+    <div class="forum-edit-post-form-wrapper"></div>
     <div class="form-row">
       <label class="sr" for="edit-post-title">${_("Edit post title")}</label>
       <input type="text" id="edit-post-title" class="edit-post-title" name="title" value="${"<%-title %>"}" placeholder="${_('Title') | h}">
@@ -407,7 +407,7 @@
                 ${_("Questions raise issues that need answers. Discussions share ideas and start conversations.")}
             </span>
         </div>
-        <div class="forum-new-post-panel"></div>
+        <div class="forum-new-post-form-wrapper"></div>
         ${'<% if (cohort_options) { %>'}
         <div class="post-field">
             <label class="field-label">
@@ -475,9 +475,7 @@
 <script aria-hidden="true" type="text/template" id="topic-template">
     ## Using div here instead of label because we are using a non-native control
     <div class="field-label">
-        <span class="field-label-text">
-            ${_("Topic Area:")}
-        </span><div class="field-input post-topic">
+        <span class="field-label-text">${_("Topic Area:")}</span><div class="field-input post-topic">
             <a href="#" class="post-topic-button">
                 <span class="sr">${_("Discussion topics; current selection is: ")}</span>
                 <span class="js-selected-topic"></span>

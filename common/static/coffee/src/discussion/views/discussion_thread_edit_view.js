@@ -36,7 +36,7 @@
             },
 
             addField: function(fieldView) {
-                this.$('.forum-edit-post-panel').append(fieldView);
+                this.$('.forum-edit-post-form-wrapper').append(fieldView);
                 return this;
             },
 

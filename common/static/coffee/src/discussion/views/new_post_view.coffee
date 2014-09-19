@@ -26,7 +26,7 @@ if Backbone?
           DiscussionUtil.makeWmdEditor @$el, $.proxy(@$, @), "js-post-body"
 
       addField: (fieldView) ->
-          @$('.forum-new-post-panel').append fieldView
+          @$('.forum-new-post-form-wrapper').append fieldView
 
       getCohortOptions: () ->
           if @course_settings.get("is_cohorted") and DiscussionUtil.isPrivilegedUser()
