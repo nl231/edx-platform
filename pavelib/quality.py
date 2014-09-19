@@ -9,8 +9,6 @@ from optparse import make_option
 
 from .utils.envs import Env
 
-PEP8_VIOLATIONS_LIMIT=800
-PYLINT_VIOLATIONS_LIMIT=4800
 
 def _count_pep8_violations(report_file):
     num_lines = sum(1 for line in open(report_file))
@@ -31,7 +29,7 @@ def _count_pylint_violations(report_file):
 @cmdopts([
     ("system=", "s", "System to act on"),
     ("errors", "e", "Check for errors only"),
-    make_option("--skip_violations_limit", action='store_true', dest="ignore_violations_limit"),
+    ("limit=", "l", "limit for number of acceptable violations"),
 ])
 def run_pylint(options):
     """
@@ -39,7 +37,7 @@ def run_pylint(options):
     """
 
     num_violations = 0
-    ignore_violations = getattr(options, 'ignore_violations_limit', None)
+    violations_limit = getattr(options, 'limit', 0)
     errors = getattr(options, 'errors', False)
     systems = getattr(options, 'system', 'lms,cms,common').split(',')
 
@@ -78,24 +76,23 @@ def run_pylint(options):
         num_violations += _count_pylint_violations(
             "{report_dir}/pylint.report".format(report_dir=report_dir))
 
-    print("number of violations: " + str(num_violations))
-    if (num_violations > PYLINT_VIOLATIONS_LIMIT) and (not ignore_violations):
+    print("Number of pylint violations: " + str(num_violations))
+    if (num_violations > violations_limit) and (violations_limit > 0):
         raise Exception("Failed. Too many pylint violations. "
-                        "{0} violations found".format(num_violations))
-
+                        "The limit is {violations_limit}.".format(violations_limit=violations_limit))
 
 @task
 @needs('pavelib.prereqs.install_python_prereqs')
 @cmdopts([
     ("system=", "s", "System to act on"),
-    make_option("--skip_violations_limit", action='store_true', dest="ignore_violations_limit"),
+    ("limit=", "l", "limit for number of acceptable violations"),
 ])
 def run_pep8(options):
     """
     Run pep8 on system code
     """
     systems = getattr(options, 'system', 'lms,cms,common').split(',')
-    ignore_violations = getattr(options, 'ignore_violations_limit', None)
+    violations_limit = getattr(options, 'limit', 0)
     num_violations = 0
 
     for system in systems:
@@ -107,10 +104,11 @@ def run_pep8(options):
         num_violations = num_violations + _count_pep8_violations(
             "{report_dir}/pep8.report".format(report_dir=report_dir))
 
+    print("Number of pep8 violations: " + str(num_violations))
     # Fail the task if the violations limit has been reached
-    if ((num_violations > PEP8_VIOLATIONS_LIMIT) and (not ignore_violations)):
+    if (num_violations > violations_limit) and (violations_limit > 0):
         raise Exception("Failed. Too many pep8 violations. "
-                        "{0} violations found".format(num_violations))
+                        "The limit is {violations_limit}.".format(violations_limit=violations_limit))
 
 @task
 @needs('pavelib.prereqs.install_python_prereqs')
