@@ -17,6 +17,7 @@
                 this.mode = options.mode || 'inline';
                 this.course_settings = options.course_settings;
                 this.topicId = options.topicId;
+                this.threadType = new DiscussionThreadTypeView({threadType: options.threadType});
                 this.topic = new DiscussionTopicView({
                     topicId: this.topicId,
                     course_settings: this.course_settings,
@@ -30,6 +31,7 @@
                 this.template = _.template($('#thread-edit-template').html());
                 this.$el.html(this.template(this.model.toJSON())).appendTo(this.container);
                 this.submitBtn = this.$('.post-update');
+                this.addField(this.threadType.render());
                 this.addField(this.topic.render());
                 DiscussionUtil.makeWmdEditor(this.$el, $.proxy(this.$, this), 'edit-post-body');
                 return this;
@@ -42,6 +44,7 @@
 
             save: function() {
                 var title = this.$('.edit-post-title').val(),
+                    threadType = this.threadType.val(),
                     body = this.$('.edit-post-body textarea').val(),
                     commentableId = this.topic.getTopicId();
 
@@ -54,6 +57,7 @@
                     async: false, // @TODO when the rest of the stuff below is made to work properly..
                     data: {
                         title: title,
+                        thread_type: threadType,
                         body: body,
                         commentable_id: commentableId
                     },
@@ -65,6 +69,7 @@
                         this.$('.wmd-preview p').html('');
                         this.model.set({
                             title: title,
+                            thread_type: threadType,
                             body: body,
                             commentable_id: commentableId,
                             courseware_title: this.topic.getFullTopicName()

@@ -7,8 +7,13 @@ if Backbone?
               throw new Error("invalid mode: " + @mode)
           @course_settings = options.course_settings
           @topicId = options.topicId
+          @type = options.threadType
 
       render: () ->
+          @threadType = new DiscussionThreadTypeView {
+              threadType: @type
+          }
+
           @topic = new DiscussionTopicView {
               topicId:  @topicId
               course_settings: @course_settings
@@ -21,6 +26,7 @@ if Backbone?
               form_id: @mode + (if @topic.getTopicId() then "-" + @topic.getTopicId() else "")
           })
           @$el.html(_.template($("#new-post-template").html(), context))
+          @addField(@threadType.render())
           @topic.on('thread:topic_change', @updateGroupDropdown)
           @addField(@topic.render())
           DiscussionUtil.makeWmdEditor @$el, $.proxy(@$, @), "js-post-body"
@@ -58,7 +64,7 @@ if Backbone?
 
       createPost: (event) ->
           event.preventDefault()
-          thread_type = @$(".post-type-input:checked").val()
+          threadType = @threadType.val()
           title   = @$(".js-post-title").val()
           body    = @$(".js-post-body").find(".wmd-input").val()
           group   = @$(".js-group-select option:selected").attr("value")
@@ -77,7 +83,7 @@ if Backbone?
               dataType: 'json'
               async: false # TODO when the rest of the stuff below is made to work properly..
               data:
-                  thread_type: thread_type
+                  thread_type: threadType
                   title: title
                   body: body
                   anonymous: anonymous
