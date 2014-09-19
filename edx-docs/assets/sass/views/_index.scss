@@ -174,34 +174,29 @@
 
   // masthead: brand
   .wrapper--logo {
-    @include span-columns(2 of 12);
-    @include shift(5);
     @include pad(($baseline*0.75) $baseline);
     position: relative;
     top: -($baseline/2);
+    display: block;
+    width: 15%;
+    margin: 0 auto;
     box-shadow: 0 2px 2px 0 $shadow-l1;
     border-top: ($baseline/4) solid $blue-s1;
     background: $white-t;
 
     // BP: medium desktop
     @include media($bp-dm) {
-      @include span-columns(2 of 12);
-      @include shift(5);
-      @include pad(($baseline/2) ($baseline*0.75));
+      width: 20%;
     }
 
     // BP: small desktop
     @include media($bp-ds) {
-      @include span-columns(2 of 6);
-      @include shift(2);
-      @include pad(($baseline/2) ($baseline*0.75));
+      width: 30%;
     }
 
     // BP: mobile
     @include media($bp-m) {
-      @include span-columns(2 of 6);
-      @include shift(2);
-      @include pad(($baseline/2) ($baseline/2));
+      width: 40%;
     }
 
     *[class^="depth"] {
