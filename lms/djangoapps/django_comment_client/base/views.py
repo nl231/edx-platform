@@ -142,6 +142,8 @@ def update_thread(request, course_id, thread_id):
     thread = cc.Thread.find(thread_id)
     thread.body = request.POST["body"]
     thread.title = request.POST["title"]
+    if "thread_type" in request.POST:
+        thread.thread_type = request.POST["thread_type"]
     thread.commentable_id = request.POST["commentable_id"]
     thread.save()
 
