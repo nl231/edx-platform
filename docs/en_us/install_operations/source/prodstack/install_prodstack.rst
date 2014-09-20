@@ -69,7 +69,15 @@ To install and run Fullstack, you must first install:
 
 * An NFS client, if your operating system does not include one. Fullstack uses
   `VirtualBox Guest Editions`_ to share folders through NFS.
-  
+
+**************************
+Hardware Prerequisites
+**************************
+To install and run Fullstack, you must own the following hardware:
+
+* AMD64 architecture
+* diskspace
+* RAM
 
 *********************************
 Install the edX Production Stack
